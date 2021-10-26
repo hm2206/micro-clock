@@ -12,7 +12,7 @@ export class ZktecoTask {
 
   private readonly logger = new Logger(ZktecoTask.name);
 
-  @Cron('0 */5 9-20 * * *')
+  @Cron('0 */20 9-20 * * *')
   public async handleCron() {
     const clocks = await this.clocksService.all();
     for (let clock of clocks) {
