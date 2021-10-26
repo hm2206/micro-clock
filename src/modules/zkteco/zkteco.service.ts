@@ -25,7 +25,7 @@ export class ZktecoService {
     const datos = connection.getAttendents();
     const collection = new Collection(datos);
     const dataForYears = collection.groupBy('year').all();
-    this.generateDir(dataForYears);
+    await this.generateDir(dataForYears);
     return isGenerate;
   }
 
@@ -46,19 +46,19 @@ export class ZktecoService {
     }
   }
 
-  private generateDir(dataForYears: any) {
+  private async generateDir(dataForYears: any) {
     const foreachYear = Object.keys(dataForYears);
     for(let keyYear of foreachYear) {
       let dataForMonth = new Collection(dataForYears[keyYear]).groupBy('month').all();
       const foreachMonth = Object.keys(dataForMonth);
       for(let keyMonth of foreachMonth) {
         let payload = dataForMonth[keyMonth];
-        this.preparateData(keyYear, keyMonth, payload);
+        await this.preparateData(keyYear, keyMonth, payload);
       }
     }
   }
 
-  private preparateData(year: string, month: string, payload: ZktecoAttendent[]) {
+  private async preparateData(year: string, month: string, payload: ZktecoAttendent[]) {
     const fileStorage = `${month}.json`;
     const pathYear = path.resolve(this.pathStorage, this.ip, year);
     const pathMonth = path.resolve(pathYear, fileStorage);
@@ -79,7 +79,7 @@ export class ZktecoService {
   private async addSaveData(pathYear: string, pathMonth: string, payload: ZktecoAttendent[]) {
     const dataExists = JSON.parse(fs.readFileSync(pathMonth, 'utf-8'));
     const combineData = [...dataExists, ...payload] as ZktecoAttendent[];
-    this.saveData(pathYear, pathMonth, combineData);
+    await this.saveData(pathYear, pathMonth, combineData);
   }
 
   private async updateMonthUnique(payload: ZktecoAttendent[]): Promise<ZktecoAttendent[]> {

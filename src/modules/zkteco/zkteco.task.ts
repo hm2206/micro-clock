@@ -12,14 +12,14 @@ export class ZktecoTask {
 
   private readonly logger = new Logger(ZktecoTask.name);
 
-  @Cron('0 */1 9-17 * * *')
+  @Cron('0 */5 9-20 * * *')
   public async handleCron() {
     const clocks = await this.clocksService.all();
     for (let clock of clocks) {
-      this.zktecoService.setIp(clock.host);
       console.log(clock.host);
-      await this.zktecoService.syncUp();
-      console.log(`syncUp`);
+      this.zktecoService.setIp(clock.host);
+      const success = await this.zktecoService.syncUp();
+      console.log(`syncUp ${clock.host} => ${success}`);
     }
   }
 }
