@@ -14,6 +14,7 @@ export const databaseService = [
       password: config.get('MYSQL_PASSWORD', ''),
       database: config.get('MYSQL_DBNAME', 'root'),
       entities: [path.resolve(__dirname, '../modules/**/*.entity{.ts,.js}')],
+      logging: false
     })
   })
 ];

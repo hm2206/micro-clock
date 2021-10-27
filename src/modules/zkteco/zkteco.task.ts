@@ -15,16 +15,17 @@ export class ZktecoTask {
 
   private readonly logger = new Logger(ZktecoTask.name);
 
-  @Cron('0 */2 7-5 * * *')
+  @Cron('0 */2 7-12 * * *')
   public async handleCron() {
-    const currentDate = DateTime.now();
-    const clocks = await this.clocksService.all();
-    for (let clock of clocks) {
-      await this.clocksService.toggleSync(clock.id, true);
-      this.zktecoService.setIp(clock.host);
-      await this.zktecoService.syncUp();
-      await this.assistancesService.migration(clock, currentDate.year, currentDate.month);
-      await this.clocksService.toggleSync(clock.id, false);
-    }
+    // const currentDate = DateTime.now();
+    // const clocks = await this.clocksService.all();
+    // // migrate data to clock
+    // for (let clock of clocks) {
+    //   await this.clocksService.toggleSync(clock.id, true);
+    //   this.zktecoService.setIp(clock.host);
+    //   await this.zktecoService.syncUp();
+    //   await this.assistancesService.migration(clock, currentDate.year, currentDate.month);
+    //   await this.clocksService.toggleSync(clock.id, false);
+    // }
   }
 }

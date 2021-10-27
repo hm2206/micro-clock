@@ -4,7 +4,7 @@ import { ScheduleEntity } from "./schedule.entity";
 @EntityRepository(ScheduleEntity)
 export class ScheduleRepository extends Repository<ScheduleEntity> {
 
-  public async findYearAndMonth(year: number, month: number) {
+  public async findYearAndMonth(year: number, month: number): Promise<ScheduleEntity[]> {
     return await this.createQueryBuilder('s')
       .innerJoinAndSelect('s.info', 'i')
       .innerJoinAndSelect('i.work', 'w')

@@ -15,8 +15,11 @@ export class AssistanceEntity {
   @Column({ name: 'schedule_id' })
   public scheduleId: number; 
 
+  @Column({ name: 'clock_id', nullable: true })
+  public clockId: number;
+
   @Column({ name: 'record_time', type: 'time' })
-  public recordTime: DateTime;
+  public recordTime: Date;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   public delay: number;
@@ -25,15 +28,18 @@ export class AssistanceEntity {
   public extra: number;
 
   @Column({ type: 'enum', enum: statusAssistance, default: 'ENTRY' })
-  public status: statusAssistance;
+  public status: string;
+
+  @Column({ nullable: true })
+  public description: string;
 
   @Column({ type: 'boolean', default: true })
   public state: boolean
 
   @CreateDateColumn({ name: 'created_at' })
-  public createdAt: DateTime;
+  public createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  public updatedAt: DateTime;
+  public updatedAt: Date;
 
 }

@@ -10,7 +10,7 @@ export class SchedulesService {
     return await this.scheduleRespository.findOneOrFail(id);
   } 
 
-  public async findYearAndMonth(year: number, month: number) {
+  public async findYearAndMonth(year: number, month: number): Promise<ScheduleEntity[]> {
     return await this.scheduleRespository.findYearAndMonth(year, month);
   }
 
