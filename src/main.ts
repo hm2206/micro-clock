@@ -17,6 +17,8 @@ async function bootstrap() {
   })
 
   await app.startAllMicroservices();
-  await app.listen(AppModule.port, AppModule.host);
+  await app.listen(AppModule.port, AppModule.host, () => {
+    console.log(`server: ${AppModule.host}:${AppModule.port}`);
+  });
 }
 bootstrap();
