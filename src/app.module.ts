@@ -4,6 +4,10 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ZktecoModule } from './modules/zkteco/zkteco.module';
 import { DatabaseModule } from './database/database.module';
 import { ClocksModule } from './modules/clocks/clocks.module';
+import { AssistancesModule } from './modules/assistances/assistances.module';
+import { SchedulesModule } from './modules/schedules/schedules.module';
+import { InfosModule } from './modules/infos/infos.module';
+import { WorksModule } from './modules/works/works.module';
 
 @Module({
   imports: [
@@ -14,6 +18,10 @@ import { ClocksModule } from './modules/clocks/clocks.module';
     ZktecoModule,
     DatabaseModule,
     ClocksModule,
+    AssistancesModule,
+    SchedulesModule,
+    InfosModule,
+    WorksModule,
   ],
 })
 export class AppModule {

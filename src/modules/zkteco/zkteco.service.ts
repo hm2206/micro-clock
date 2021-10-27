@@ -29,10 +29,11 @@ export class ZktecoService {
     return isGenerate;
   }
 
-  public async list(year: number, month?: number | undefined) {
+  public async list(year?: number | undefined, month?: number | undefined) {
     try {
       const currentMonth = month || this.currentDate.month;
-      const pathMonth = path.resolve(this.pathStorage, `${this.ip}/${year}/${currentMonth}.json`);
+      const currentYear = year || this.currentDate.year;
+      const pathMonth = path.resolve(this.pathStorage, `${this.ip}/${currentYear}/${currentMonth}.json`);
       const exists = fs.existsSync(pathMonth);
       if (!exists) throw new Error();
       const datos = JSON.parse(fs.readFileSync(pathMonth, 'utf-8'));
@@ -65,7 +66,7 @@ export class ZktecoService {
     const existsMonth = fs.existsSync(pathMonth);
     if (!existsMonth) return this.saveData(pathYear, pathMonth, payload);
     if (this.currentDate.year ===  parseInt(year) && 
-    (this.currentDate.month + 1) === parseInt(month)) {
+    (this.currentDate.month) === parseInt(month)) {
       return this.addSaveData(pathYear, pathMonth, payload);
     }
   }

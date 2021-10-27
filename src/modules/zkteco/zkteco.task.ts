@@ -1,5 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
+import { DateTime } from 'luxon';
+import { AssistancesService } from '../assistances/asssitances.service';
 import { ClocksService } from '../clocks/clocks.service';
 import { ZktecoService } from './zkteco.service';
 
@@ -8,18 +10,21 @@ export class ZktecoTask {
   constructor(
     private readonly clocksService: ClocksService,
     private readonly zktecoService: ZktecoService,
+    private readonly assistancesService: AssistancesService,
   ) {}
 
   private readonly logger = new Logger(ZktecoTask.name);
 
-  @Cron('0 */20 9-20 * * *')
+  @Cron('0 */2 7-5 * * *')
   public async handleCron() {
+    const currentDate = DateTime.now();
     const clocks = await this.clocksService.all();
     for (let clock of clocks) {
-      console.log(clock.host);
+      await this.clocksService.toggleSync(clock.id, true);
       this.zktecoService.setIp(clock.host);
-      const success = await this.zktecoService.syncUp();
-      console.log(`syncUp ${clock.host} => ${success}`);
+      await this.zktecoService.syncUp();
+      await this.assistancesService.migration(clock, currentDate.year, currentDate.month);
+      await this.clocksService.toggleSync(clock.id, false);
     }
   }
 }

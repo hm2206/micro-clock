@@ -5,9 +5,13 @@ import { ZktecoMicroservice } from './zkteco.microservice';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ZktecoTask } from './zkteco.task';
 import { ClocksModule } from '../clocks/clocks.module';
+import { AssistancesModule } from '../assistances/assistances.module';
+import { SchedulesModule } from '../schedules/schedules.module';
 
 @Module({
   imports: [
+    AssistancesModule,
+    SchedulesModule,
     ClocksModule,
     ClientsModule.register([
       { 
