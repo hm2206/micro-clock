@@ -80,7 +80,7 @@ export class ZktecoService {
   private async addSaveData(pathYear: string, pathMonth: string, payload: ZktecoAttendent[]) {
     const dataExists = JSON.parse(fs.readFileSync(pathMonth, 'utf-8'));
     const countDataExists = dataExists.length || 0;
-    if (countDataExists == payload.length) return; 
+    if (countDataExists == payload.length) return;
     const combineData = [...dataExists, ...payload] as ZktecoAttendent[];
     await this.saveData(pathYear, pathMonth, combineData);
   }
@@ -90,9 +90,10 @@ export class ZktecoService {
     await payload.map(async data => {
       // Obtener registro existente;
       const exists = await dataUnique.where('numberCredential', data.numberCredential)
+        .where('day', data.day)
         .where('hour', data.hour)
         .where('minute', data.minute)
-        .first();
+        .first() ? true : false;
       // validar si el registro no existe en el JSON
       if (!exists) dataUnique.push(data);
       // response

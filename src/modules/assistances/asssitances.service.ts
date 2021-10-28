@@ -46,6 +46,8 @@ export class AssistancesService {
           console.log(error.message);
         }
       }
+      // actualizar status
+      await this.assistanceRepository.UpdateAssistanceStatusProcedure(schedule.id);
     }
   }
 
