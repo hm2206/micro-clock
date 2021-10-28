@@ -84,10 +84,8 @@ export class ZktecoService {
     if (countDataExists == payload.length) return;
     else if (countDataExists > payload.length) {
       combineData = [...dataExists, ...payload] as ZktecoAttendent[];
-    } else if(countDataExists < payload.length) {
-      combineData = payload;
     } else {
-      return;
+      combineData = payload;
     }
     // guardar datos
     await this.saveData(pathYear, pathMonth, combineData);
@@ -97,11 +95,7 @@ export class ZktecoService {
     const dataUnique  = new Collection([]);
     await payload.map(async data => {
       // Obtener registro existente;
-      const exists = await dataUnique.where('numberCredential', data.numberCredential)
-        .where('day', data.day)
-        .where('hour', data.hour)
-        .where('minute', data.minute)
-        .first() ? true : false;
+      const exists = await dataUnique.where('id', `${data.id}`).first() ? true : false;
       // validar si el registro no existe en el JSON
       if (!exists) dataUnique.push(data);
       // response

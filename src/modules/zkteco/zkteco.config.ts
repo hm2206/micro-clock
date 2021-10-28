@@ -41,9 +41,18 @@ export class ZktecoConfig {
     })
     .catch(() => false);
     // recorrer datos
-    await payload.forEach(asistance => {
+    await payload.forEach((asistance) => {
+      const pluckIds = [
+        asistance.NumeroCredencial,
+        asistance.Anio,
+        asistance.Mes,
+        asistance.Dia,
+        asistance.Hora,
+        asistance.Minuto,
+      ];
+      // add datos
       this.attendents.push({
-        id: uuid4(),
+        id: pluckIds.join(':'),
         numberCredential: asistance.NumeroCredencial,
         ip: this.ip,
         year: asistance.Anio,
