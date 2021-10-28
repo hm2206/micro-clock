@@ -15,7 +15,7 @@ export class ZktecoTask {
 
   private readonly logger = new Logger(ZktecoTask.name);
 
-  @Cron('0 */2 6-23 * * *')
+  @Cron('0 */20 6-23 * * *')
   public async handleCron() {
     const currentDate = DateTime.now();
     const clocks = await this.clocksService.all();
