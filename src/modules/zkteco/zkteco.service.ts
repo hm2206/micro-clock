@@ -79,9 +79,17 @@ export class ZktecoService {
 
   private async addSaveData(pathYear: string, pathMonth: string, payload: ZktecoAttendent[]) {
     const dataExists = JSON.parse(fs.readFileSync(pathMonth, 'utf-8'));
+    let combineData = [];
     const countDataExists = dataExists.length || 0;
     if (countDataExists == payload.length) return;
-    const combineData = [...dataExists, ...payload] as ZktecoAttendent[];
+    else if (countDataExists > payload.length) {
+      combineData = [...dataExists, ...payload] as ZktecoAttendent[];
+    } else if(countDataExists < payload.length) {
+      combineData = payload;
+    } else {
+      return;
+    }
+    // guardar datos
     await this.saveData(pathYear, pathMonth, combineData);
   }
 
