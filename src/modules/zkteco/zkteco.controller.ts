@@ -12,4 +12,10 @@ export class ZktecoController {
     this.zktecoService.setIp(ip);
     return this.zktecoService.list(query.year, query.month);
   }
+
+  @Get(':ip/backup')
+  public async backup(@Param('ip') ip: string) {
+    this.zktecoService.setIp(ip);
+    return this.zktecoService.syncUp();
+  }
 }
